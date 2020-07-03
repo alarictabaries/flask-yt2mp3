@@ -1,19 +1,96 @@
 <!doctype html>
 <html>
-    <head>
-        <title>hello youtube downloader</title>
-    </head>
-    <script src="/static/js/jquery.min.js"></script>
-    <script src="/static/js/ytdl.js"></script>
-<body>
-    Hello this is youtube-dl
-    <br>
-    <br>
-    <form id="dlform" name="dlform" action="/download" method="post">
-        Youtube link:<br>
-        <input id="url" type="text" name="url">
-        <button id="submit" type="submit" form="dlform" value="Download">Submit</button>
-        <span id="info" hidden>Ok, downloading...</span>
-    </form>
+<head>
+
+    <meta charset="utf-8">
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.0.1/dist/alpine.js" defer></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tailwindcss/ui@latest/dist/tailwind-ui.min.css" />
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+
+    <title>Titre</title>
+
+    <style type="text/css">
+        html, .font-sans{font-family:"Inter var",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"}
+        .sm\:font-sans{font-family:"Inter var",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"}
+        .md\:font-sans{font-family:"Inter var",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"}
+        .lg\:font-sans{font-family:"Inter var",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"}
+        .xl\:font-sans{font-family:"Inter var",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"}
+    </style>
+
+</head>
+<body class="flex justify-center bg-gray-100">
+
+<div class="mt-20 mb-20" style="width: 780px;">
+
+    <div class="relative">
+        <div class="flex justify-center">
+            <img src="../static/logo.png" style="width: 200px;"/>
+        </div>
+
+        <div class="mt-8 flex justify-center">
+            <img src="../static/music.svg" style="width: 55%;"/>
+        </div>
+
+        <div class="absolute -mt-28 w-full bg-gray-200 flex justify-center" style="left:50%;transform:translate(-50%,0); background: rgb(255,255,255);
+background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(210,214,220,1) 50%, rgba(244,245,247,1) 100%);">
+            <form id="dlform" name="dlform" action="/download" method="post" class="w-64 pt-4 pb-2">
+                <div>
+                    <div class="mt-1 rounded-md shadow-sm">
+                        <input placeholder="Lien YouTube" name="yt-link"  id="yt-link" type="text" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
+                    </div>
+                </div>
+
+                <div class="mt-4">
+          <span class="block w-full rounded-md shadow-sm">
+            <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-500 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out">
+              Télecharger
+            </button>
+          </span>
+
+                            <span id="info" hidden>Ok, downloading...</span>
+
+                </div>
+            </form>
+        </div>
+
+        <div class="flex justify-center mt-8 mb-8">
+            <div style="width: 80%" class="border-t-2 border-indigo-200"></div>
+        </div>
+
+        <div class="flex">
+            <div class="pr-8 pt-2 pb-2">
+                <h1 class="font-medium truncate text-gray-800 font-normal">Sous-titre</h1>
+                <p  class="pt-2 text-gray-700 font-normal text-sm text-justify">
+                    Integer rutrum eleifend neque, in pulvinar urna placerat a. Cras vitae eros tincidunt, faucibus urna quis, imperdiet ipsum. Nam tempus eget urna non rutrum. Ut in commodo justo, eget rutrum nisi. Morbi a leo a nulla tempus finibus. Duis pellentesque arcu nec pulvinar pharetra. Nam ullamcorper diam consectetur nisl dictum consectetur. Donec ultrices odio non lorem ullamcorper, id convallis orci maximus.
+                </p>
+            </div>
+            <div class="pl-8 border-l-2 border-gray-200 pt-2 pb-2">
+                <h1 class="font-medium truncate text-gray-800 font-normal">Sous-titre</h1>
+                <p  class="pt-2 text-gray-700 font-normal text-sm text-justify">
+                    Integer rutrum eleifend neque, in pulvinar urna placerat a. Cras vitae eros tincidunt, faucibus urna quis, imperdiet ipsum. Nam tempus eget urna non rutrum. Ut in commodo justo, eget rutrum nisi. Morbi a leo a nulla tempus finibus. Duis pellentesque arcu nec pulvinar pharetra. Nam ullamcorper diam consectetur nisl dictum consectetur. Donec ultrices odio non lorem ullamcorper, id convallis orci maximus.
+                </p>
+            </div>
+        </div>
+
+        <div class="text-sm mt-12 flex justify-between">
+            <div class="text-gray-700 flex items-center">
+                <svg class="w-4 h-4 text-red-500 mr-2" fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                Integer rutrum eleifend neque
+            </div>
+            <div>
+                <a class="text-indigo-600 underline" href="#">Test</a> -
+                <a class="text-indigo-600 underline" href="#">Test</a> -
+                <a class="text-indigo-600 underline" href="#">Test</a>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+
 </body>
 </html>

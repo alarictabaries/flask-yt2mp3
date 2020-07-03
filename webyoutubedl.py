@@ -1,8 +1,8 @@
-#!/usr/bin/python2
 from flask import Flask, render_template, request, send_file, redirect
-from subprocess import check_output, call
+import subprocess
 from os import chdir as cd
 from re import match
+import youtube_dl
 
 app = Flask(__name__)
 
@@ -12,28 +12,32 @@ def root():
 
 @app.route("/download", methods=['POST'])
 def download():
-    url = request.form.get('url', type=str)
+    url = request.form.get('yt-link', type=str)
     if url == "":
         return redirect("/")
 
-    out = check_output("youtube-dl -x --audio-format mp3 --prefer-avconv --audio-quality 0 --no-progress \"{}\"".format(url),
-                       shell=True)
+    ydl_opts = {
+        'outtmpl': 'C:/Users/altab/WebstormProjects/flask-yt2mp3/mp3/%(title)s-%(id)s.%(ext)s',
+        'format': 'bestaudio/best',
+        'postprocessors': [{
+            'key': 'FFmpegExtractAudio',
+            'preferredcodec': 'mp3',
+            'preferredquality': '192',
+        }],
+    }
 
-    for line in out.decode("utf-8").split("\n"):
-        if "[avconv] Destination: " in line or "[ffmpeg] Destination: " in line:
-            fname = line.split(": ")[1]
-            break
+    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+        info = ydl.extract_info(url, download=True)
+        title = info.get("title")
+        filename = ydl.prepare_filename(info)
 
-        elif "Unfortunately, this video is not available in your country" in line:
-            return render_template("unavailable.html")
 
-    print("fname: " + str(fname))
-    call("mv \"{0}\" mp3/\"{0}\"".format(fname), shell=True)
-    return send_file("mp3/"+fname,
-                     attachment_filename=fname,
+    print(filename)
+
+    return send_file(filename.replace(".m4a", ".mp3"),
+                     attachment_filename=title,
                      as_attachment=True)
 
 if __name__ == "__main__":
-    app.run(debug=True,
-            host="0.0.0.0")
+    app.run(debug=True, host="localhost")
 
